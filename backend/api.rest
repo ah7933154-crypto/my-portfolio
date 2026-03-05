@@ -1,0 +1,15 @@
+### Test Status
+GET http://localhost:5000/api/status
+
+### Test Get Projects
+GET http://localhost:5000/api/projects
+
+### Test Submit Contact Form
+POST http://localhost:5000/api/contact
+Content-Type: application/json
+
+{
+    "name": "Test User",
+    "email": "ali.haider213f@gmail.com",
+    "message": "Hello from the test script!"
+}
