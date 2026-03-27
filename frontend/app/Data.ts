@@ -88,7 +88,6 @@ export const skills: Skill[] = [
   { name: 'Next.js', icon: SiNextdotjs , category: 'framework' },
   { name: 'VS Code', icon: VscVscode , category: 'tool' },
   { name: 'GitHub', icon: SiGithub , category: 'tool' },
-  { name: 'Three.js', icon: SiThreedotjs , category: 'framework' },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -125,7 +124,7 @@ export const testimonials: Testimonial[] = [
     role: 'Full Stack Collaborator',
     company: 'Project Partner',
     text: 'Ali is a reliable teammate who brings great technical insights to our group discussions and development sprints.',
-    avatar: 'IB',
+    avatar: 'IB', 
     rating: 5,
   }
 ];
