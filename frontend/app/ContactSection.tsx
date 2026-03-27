@@ -3,65 +3,57 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
-import { FiGithub, FiLinkedin, FiInstagram, FiTwitter } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiInstagram } from 'react-icons/fi';
+
 export default function ContactSection() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   const [formState, setFormState] = useState({ name: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [focused, setFocused] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
+    setLoading(true)
 
     try {
-      // 1. Send data to your backend API
-      const response = await fetch('http://localhost:5000/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formState),
-      });
+      // ✅ FIX: reads from .env.local in dev, and Vercel env vars in production
+      // Set NEXT_PUBLIC_BACKEND_URL in your frontend Vercel project settings
+      const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
-      const data = await response.json();
+      if (!BACKEND_URL) {
+        throw new Error('NEXT_PUBLIC_BACKEND_URL is not set. Check your environment variables.')
+      }
+
+      const response = await fetch(`${BACKEND_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formState),
+      })
+
+      const data = await response.json()
 
       if (response.ok) {
-        setSent(true);
-        setFormState({ name: '', email: '', message: '' }); // Clear form
-        setTimeout(() => setSent(false), 3000);
+        setSent(true)
+        setFormState({ name: '', email: '', message: '' })
+        setTimeout(() => setSent(false), 3000)
       } else {
-        alert(data.message || 'Something went wrong');
+        alert(data.message || 'Something went wrong. Please try again.')
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error('Error submitting form:', error)
+      alert('Could not reach the server. Please email me directly at ali.haider213f@gmail.com')
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
   const contactItems = [
-    {
-      icon: <FiMail size={18} />,
-      label: 'Email',
-      value: 'ali.haider213f@gmail.com',
-      href: 'mailto:ali.haider213f@gmail.com',
-      color: '#6e50ff',
-    },
-    {
-      icon: <FiPhone size={18} />,
-      label: 'Phone',
-      value: '+92 334 5581535',
-      href: 'tel:+923345581535',
-      color: '#22d3ee',
-    },
-    {
-      icon: <FiMapPin size={18} />,
-      label: 'Location',
-      value: 'Rawalpindi, Pakistan',
-      href: 'https://goo.gl/maps/your-actual-link', // Update this with a real Google Maps link
-      color: '#4ade80',
-    },
-  ];
+    { icon: <FiMail size={18} />, label: 'Email',    value: 'ali.haider213f@gmail.com', href: 'mailto:ali.haider213f@gmail.com', color: '#6e50ff' },
+    { icon: <FiPhone size={18} />, label: 'Phone',   value: '+92 334 5581535',          href: 'tel:+923345581535',               color: '#22d3ee' },
+    { icon: <FiMapPin size={18} />, label: 'Location', value: 'Rawalpindi, Pakistan',  href: 'https://maps.google.com/?q=Rawalpindi,Pakistan', color: '#4ade80' },
+  ]
 
   const inputBase = `w-full glass rounded-xl px-4 py-3.5 text-sm dark:text-[#f0eeff] text-[#12101e] 
     placeholder:dark:text-[#4a4468] placeholder:text-[#9896a8] outline-none 
@@ -71,11 +63,9 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="relative py-32 overflow-hidden">
-      {/* BG */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full bg-[#6e50ff]/5 blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-6" ref={ref}>
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -93,23 +83,14 @@ export default function ContactSection() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h2
-              className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-6"
-              style={{ fontFamily: 'Syne, sans-serif' }}
-            >
-              Let&apos;s build
-              <br />
-              something
-              <br />
-              <span className="gradient-text">amazing</span> together.
+            <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight mb-6" style={{ fontFamily: 'Syne, sans-serif' }}>
+              Let&apos;s build<br />something<br /><span className="gradient-text">amazing</span> together.
             </h2>
 
             <p className="dark:text-[#6b6480] text-[#8b80b0] leading-relaxed mb-12 max-w-sm">
-              Whether it&apos;s a new project, freelance opportunity, or just a chat —
-              my inbox is always open.
+              Whether it&apos;s a new project, freelance opportunity, or just a chat — my inbox is always open.
             </p>
 
-            {/* Contact info */}
             <div className="space-y-4">
               {contactItems.map((item, i) => (
                 <motion.a
@@ -125,30 +106,18 @@ export default function ContactSection() {
                 >
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300"
-                    style={{
-                      background: `${item.color}15`,
-                      border: `1px solid ${item.color}25`,
-                      color: item.color, // This applies the color to the React Icon
-                    }}
+                    style={{ background: `${item.color}15`, border: `1px solid ${item.color}25`, color: item.color }}
                   >
                     {item.icon}
                   </div>
                   <div>
-                    <div className="text-xs font-mono dark:text-[#4a4468] text-[#9896a8] uppercase tracking-wider mb-0.5">
-                      {item.label}
-                    </div>
-                    <div
-                      className="text-sm font-medium transition-colors duration-300"
-                      style={{ color: item.color }}
-                    >
-                      {item.value}
-                    </div>
+                    <div className="text-xs font-mono dark:text-[#4a4468] text-[#9896a8] uppercase tracking-wider mb-0.5">{item.label}</div>
+                    <div className="text-sm font-medium transition-colors duration-300" style={{ color: item.color }}>{item.value}</div>
                   </div>
                 </motion.a>
               ))}
             </div>
 
-            {/* Social row */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
@@ -156,27 +125,20 @@ export default function ContactSection() {
               className="flex items-center gap-3 mt-10 pt-8 border-t dark:border-white/5 border-black/5"
             >
               {[
-                { icon: <FiGithub size={20} />, label: 'GitHub', href: 'https://github.com/ah7933154-crypto', brandColor: '#ffffff' },
-                { icon: <FiLinkedin size={20} />, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ali-haider-a05b7b334?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app', brandColor: '#0077b5' },
-                { icon: <FiInstagram size={20} />, label: 'Instagram', href: 'c:/Users/OCS/AppData/Local/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalState/sessions/2ED08C423925BB5D7B9D8D9C6C688F07DD757ECA/transfers/2026-09/WhatsApp Image 2026-03-03 at 20.57.25.jpeg', brandColor: '#e4405f' },
+                { icon: <FiGithub size={20} />,   label: 'GitHub',    href: 'https://github.com/ah7933154-crypto', brandColor: '#ffffff' },
+                { icon: <FiLinkedin size={20} />, label: 'LinkedIn',  href: 'https://www.linkedin.com/in/ali-haider-a05b7b334', brandColor: '#0077b5' },
+                { icon: <FiInstagram size={20} />, label: 'Instagram', href: 'https://instagram.com', brandColor: '#e4405f' },
               ].map(s => (
                 <motion.a
                   key={s.label}
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  // Framer Motion handles the animation of scale, position, border, shadow, AND color
-                  whileHover={{
-                    scale: 1.1,
-                    y: -4,
-                    borderColor: `${s.brandColor}60`, // 60% opacity for a clearer border
-                    boxShadow: `0 10px 20px ${s.brandColor}20`,
-                    color: s.brandColor // This forces the React Icon inside to change color
-                  }}
+                  whileHover={{ scale: 1.1, y: -4, borderColor: `${s.brandColor}60`, boxShadow: `0 10px 20px ${s.brandColor}20`, color: s.brandColor }}
                   whileTap={{ scale: 0.95 }}
-                  initial={{ color: '#9896a8' }} // Starting color (matches your text)
+                  initial={{ color: '#9896a8' }}
                   className="glass rounded-xl w-10 h-10 flex items-center justify-center text-base transition-all duration-300"
-                  style={{ border: '1px solid rgba(255,255,255,0.05)' }} // Default subtle border
+                  style={{ border: '1px solid rgba(255,255,255,0.05)' }}
                   title={s.label}
                 >
                   {s.icon}
@@ -193,51 +155,36 @@ export default function ContactSection() {
           >
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-mono dark:text-[#4a4468] text-[#9896a8] uppercase tracking-wider mb-2">
-                  Your Name
-                </label>
+                <label className="block text-xs font-mono dark:text-[#4a4468] text-[#9896a8] uppercase tracking-wider mb-2">Your Name</label>
                 <input
-                  type="text"
-                  required
-                  placeholder="Ali Khan"
+                  type="text" required placeholder="Ali Khan"
                   value={formState.name}
                   onChange={e => setFormState(s => ({ ...s, name: e.target.value }))}
-                  onFocus={() => setFocused('name')}
-                  onBlur={() => setFocused(null)}
+                  onFocus={() => setFocused('name')} onBlur={() => setFocused(null)}
                   className={`${inputBase} ${focused === 'name' ? inputFocused : inputDefault}`}
                   style={{ background: focused === 'name' ? 'rgba(110,80,255,0.06)' : undefined }}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono dark:text-[#4a4468] text-[#9896a8] uppercase tracking-wider mb-2">
-                  Email Address
-                </label>
+                <label className="block text-xs font-mono dark:text-[#4a4468] text-[#9896a8] uppercase tracking-wider mb-2">Email Address</label>
                 <input
-                  type="email"
-                  required
-                  placeholder="you@example.com"
+                  type="email" required placeholder="you@example.com"
                   value={formState.email}
                   onChange={e => setFormState(s => ({ ...s, email: e.target.value }))}
-                  onFocus={() => setFocused('email')}
-                  onBlur={() => setFocused(null)}
+                  onFocus={() => setFocused('email')} onBlur={() => setFocused(null)}
                   className={`${inputBase} ${focused === 'email' ? inputFocused : inputDefault}`}
                   style={{ background: focused === 'email' ? 'rgba(110,80,255,0.06)' : undefined }}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono dark:text-[#4a4468] text-[#9896a8] uppercase tracking-wider mb-2">
-                  Message
-                </label>
+                <label className="block text-xs font-mono dark:text-[#4a4468] text-[#9896a8] uppercase tracking-wider mb-2">Message</label>
                 <textarea
-                  required
-                  rows={5}
-                  placeholder="Tell me about your project..."
+                  required rows={5} placeholder="Tell me about your project..."
                   value={formState.message}
                   onChange={e => setFormState(s => ({ ...s, message: e.target.value }))}
-                  onFocus={() => setFocused('message')}
-                  onBlur={() => setFocused(null)}
+                  onFocus={() => setFocused('message')} onBlur={() => setFocused(null)}
                   className={`${inputBase} resize-none ${focused === 'message' ? inputFocused : inputDefault}`}
                   style={{ background: focused === 'message' ? 'rgba(110,80,255,0.06)' : undefined }}
                 />
@@ -245,28 +192,27 @@ export default function ContactSection() {
 
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(110,80,255,0.4)' }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-4 rounded-xl text-white font-semibold text-sm tracking-wide transition-all duration-300 relative overflow-hidden"
+                disabled={loading}
+                whileHover={!loading ? { scale: 1.02, boxShadow: '0 0 40px rgba(110,80,255,0.4)' } : {}}
+                whileTap={!loading ? { scale: 0.98 } : {}}
+                className="w-full py-4 rounded-xl text-white font-semibold text-sm tracking-wide transition-all duration-300 relative overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
                 style={{
-                  background: sent
-                    ? 'linear-gradient(135deg, #4ade80, #22d3ee)'
-                    : 'linear-gradient(135deg, #6e50ff, #c084fc)',
+                  background: sent ? 'linear-gradient(135deg, #4ade80, #22d3ee)' : 'linear-gradient(135deg, #6e50ff, #c084fc)',
                   boxShadow: '0 0 30px rgba(110,80,255,0.25)',
                 }}
               >
                 <motion.span
-                  key={sent ? 'sent' : 'send'}
+                  key={sent ? 'sent' : loading ? 'loading' : 'send'}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                 >
-                  {sent ? '✓ Message Sent!' : 'Send Message →'}
+                  {sent ? '✓ Message Sent!' : loading ? 'Sending...' : 'Send Message →'}
                 </motion.span>
               </motion.button>
 
               <p className="text-xs dark:text-[#4a4468] text-[#9896a8] text-center">
-                This will open your mail client. Alternatively, email me directly.
+                Or email me directly at ali.haider213f@gmail.com
               </p>
             </form>
           </motion.div>
