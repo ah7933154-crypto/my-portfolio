@@ -12,12 +12,37 @@ const PORT = process.env.PORT || 5000
 
 app.use(helmet())
 
+// ✅ FIX: Allow all Vercel preview URLs + your production frontend
 app.use(cors({
-  origin:         [process.env.CLIENT_URL || 'http://localhost:3000', 'http://localhost:3000', 'http://localhost:3001'],
-  methods:        ['GET','POST','PATCH','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization'],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (Postman, curl, server-to-server)
+    if (!origin) return callback(null, true)
+
+    const allowed = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://my-portfolio-i3ukqvaa3-ali-haiders-projects-0a3722ca.vercel.app/',
+      // ✅ Your frontend production URL — set this in Vercel env vars
+      process.env.CLIENT_URL,
+    ].filter(Boolean)
+
+    // Also allow ANY *.vercel.app subdomain (covers all preview deployments)
+    const isVercel = /^https:\/\/.*\.vercel\.app$/.test(origin)
+
+    if (isVercel || allowed.includes(origin)) {
+      callback(null, true)
+    } else {
+      console.warn(`⚠️  CORS blocked origin: ${origin}`)
+      callback(new Error(`CORS: origin ${origin} not allowed`))
+    }
+  },
+  methods:        ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials:    true,
 }))
+
+// ✅ Needed on Vercel — it sits behind a proxy
+app.set('trust proxy', 1)
 
 app.use(express.json({ limit: '10kb' }))
 app.use(express.urlencoded({ extended: true, limit: '10kb' }))
