@@ -18,15 +18,15 @@ export default function ContactSection() {
     setLoading(true)
 
     try {
-      const BACKEND_URL =
-        process.env.NEXT_PUBLIC_BACKEND_URL ||
-        (process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : '')
+      const configuredBackend = (process.env.NEXT_PUBLIC_BACKEND_URL || '').trim().replace(/\/$/, '')
+      const contactEndpoint =
+        configuredBackend
+          ? `${configuredBackend}/api/contact`
+          : process.env.NODE_ENV === 'development'
+            ? 'http://localhost:5000/api/contact'
+            : '/api/contact'
 
-      if (!BACKEND_URL) {
-        throw new Error('NEXT_PUBLIC_BACKEND_URL is not set. Check your environment variables.')
-      }
-
-      const response = await fetch(`${BACKEND_URL}/api/contact`, {
+      const response = await fetch(contactEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formState),

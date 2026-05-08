@@ -62,9 +62,11 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: err.message })
 })
 
-app.listen(PORT, () => {
-  console.log(`\n🚀 Server: http://localhost:${PORT}`)
-  console.log(`🔍 Test:   http://localhost:${PORT}/api/health\n`)
-})
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Server: http://localhost:${PORT}`)
+    console.log(`🔍 Test:   http://localhost:${PORT}/api/health\n`)
+  })
+}
 
 module.exports = app
