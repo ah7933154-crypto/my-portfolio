@@ -18,9 +18,9 @@ export default function ContactSection() {
     setLoading(true)
 
     try {
-      // ✅ FIX: reads from .env.local in dev, and Vercel env vars in production
-      // Set NEXT_PUBLIC_BACKEND_URL in your frontend Vercel project settings
-      const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+      const BACKEND_URL =
+        process.env.NEXT_PUBLIC_BACKEND_URL ||
+        (process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : '')
 
       if (!BACKEND_URL) {
         throw new Error('NEXT_PUBLIC_BACKEND_URL is not set. Check your environment variables.')
