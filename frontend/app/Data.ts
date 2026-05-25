@@ -14,63 +14,65 @@ import {
 export const projects: Project[] = [
   {
     id: 1,
-    title: 'Flight Reservation System',
-    description: 'A fully functional airline ticket booking system with seat management, passenger records, and real-time availability tracking. Built in C++ with efficient data structures.',
-    tags: ['C++', 'OOP', 'Data Structures', 'File I/O'],
-    color: '#6e50ff',
-    icon: LuPlane, // NO QUOTES HERE
-    featured: true,
-    github: 'https://github.com/ah7933154-crypto/Flight-reservation-system-C-.git',
-    demo: ""
-  },
-  {
-    id: 2,
     title: 'XploreMath',
-    description: 'An interactive mathematics learning platform with dynamic visualizations, equation solvers, and concept explanations.',
-    tags: ['React', 'JavaScript', 'CSS', 'Math.js'],
+    description: 'A full-stack, data-driven educational web platform engineered for real-time mathematical operations. Features dynamic asset parsing, secure state management, and optimized mathematical rendering engines for complex user computations.',
+    tags: ['React', 'Node.js', 'Express', 'Supabase', 'PostgreSQL', 'Math.js'],
     color: '#22d3ee',
-    icon: LuCalculator, // NO QUOTES HERE
+    icon: LuCalculator,
     featured: true,
     github: 'https://github.com/ah7933154-crypto/XploreMath-learning-app',
     demo: 'https://xplore-math-learning-app.vercel.app/',
   },
   {
-    id: 3,
-    title: 'Finance Tracker',
-    description: 'Personal finance management app with expense tracking, budget planning, visual charts, and monthly reports.',
-    tags: ['React', 'JavaScript', 'Chart.js', 'LocalStorage'],
-    color: '#4ade80',
-    icon: LuWallet, // NO QUOTES HERE
-    github: '#',
-    demo: '',
-  },
-  {
-    id: 4,
-    title: 'Islamabad City Map',
-    description: "A C++ console-based city navigation system using graph algorithms (Dijkstra's) to find shortest paths.",
-    tags: ['C++', 'Graphs', 'Dijkstra', 'DSA'],
-    color: '#f472b6',
-    icon: LuMap, // NO QUOTES HERE
-    github: 'https://github.com/ah7933154-crypto/Islamabad-city-map-c-data-structures-algorithms/',
-  },
-  {
-    id: 5,
-    title: 'Ecommerce Frontend',
-    description: 'Professional e-commerce frontend developed during internship at DevelopersHub Corporation.',
-    tags: ['React', 'JavaScript', 'Tailwind', 'API'],
+    id: 2,
+    title: 'Commercial E-Commerce Pipeline',
+    description: 'Production-grade enterprise storefront interface engineered during a technical software development contract at DevelopersHub Corporation. Developed modular UI components integrated with RESTful endpoints to manage active product cycles and shopping sessions.',
+    tags: ['React.js', 'JavaScript (ES6+)', 'Tailwind CSS', 'REST APIs', 'Git Workflow'],
     color: '#fb923c',
-    icon: LuShoppingCart, // NO QUOTES HERE
+    icon: LuShoppingCart,
     featured: true,
     github: 'https://github.com/ah7933154-crypto/my_ecommerce_frontend_pages',
     demo: '',
   },
   {
+    id: 3,
+    title: 'Enterprise Inventory Management System (SamanFlow)',
+    description: 'A high-integrity core system built in Java utilizing robust Object-Oriented Programming (OOP) design patterns. Engineered strict business logic validation pipelines to eliminate data race conditions during large-scale commercial asset tracking.',
+    tags: ['Java', 'OOP', 'Data Validation', 'Relational Databases', 'System Architecture'],
+    color: '#4ade80', // Repurposed your wallet color for this premium asset!
+    icon: LuWallet, 
+    featured: true,
+    github: '#', // Add your SamanFlow repo here when ready!
+    demo: '',
+  },
+  {
+    id: 4,
+    title: 'High-Concurrency Flight Reservation Engine',
+    description: 'A backend architecture simulation designed in C++ optimizing core memory data structures. Features low-latency seat allocation matrices, persistent file storage data streaming, and rigorous edge-case passenger record indexing.',
+    tags: ['C++', 'Memory Management', 'Data Structures', 'File I/O Systems'],
+    color: '#6e50ff',
+    icon: LuPlane,
+    featured: false,
+    github: 'https://github.com/ah7933154-crypto/Flight-reservation-system-C-.git',
+    demo: ""
+  },
+  {
+    id: 5,
+    title: 'Autonomous Geospatial Routing Engine',
+    description: 'A backend pathfinding application utilizing custom graph data structures to compute optimized travel coordinates. Implemented a strict programmatic adaptation of Dijkstra’s Algorithm to handle real-time spatial node layouts.',
+    tags: ['C++', 'Graph Theory', 'Dijkstra Routing', 'Algorithmic Optimization'],
+    color: '#f472b6',
+    icon: LuMap,
+    featured: false,
+    github: 'https://github.com/ah7933154-crypto/Islamabad-city-map-c-data-structures-algorithms/',
+  },
+  {
     id: 6,
-    title: 'This Portfolio',
-    description: 'The very portfolio you are viewing — built with Next.js, Three.js, Framer Motion, and Tailwind CSS.',
-    tags: ['Next.js', 'Three.js', 'Framer Motion', 'TypeScript'],
+    title: 'Interactive 3D Engineering Portfolio',
+    description: 'The very software platform you are interacting with. Built utilizing Next.js for server-side optimization, integrated with a Three.js / Framer Motion graphic layer to deliver a highly responsive, modern user layout.',
+    tags: ['Next.js', 'Three.js', 'Framer Motion', 'TypeScript', 'Vercel Pipeline'],
     color: '#a78bfa',
-    icon: LuPalette, // NO QUOTES HERE
+    icon: LuPalette,
     github: '#',
     demo: '',
   },

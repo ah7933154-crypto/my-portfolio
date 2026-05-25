@@ -18,7 +18,7 @@ const contactValidation = [
   body('message')
     .trim()
     .notEmpty().withMessage('Message is required')
-    .isLength({ min: 10, max: 2000 }).withMessage('Message must be 10–2000 characters'),
+    .isLength({ min: 5, max: 2000 }).withMessage('Message must be 5–2000 characters'),
 ]
 
 module.exports = { contactValidation }

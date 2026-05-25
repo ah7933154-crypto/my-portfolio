@@ -7,12 +7,12 @@ import dynamic from 'next/dynamic'
 const ParticleField = dynamic(() => import('@/app/particleField'), { ssr: false })
 
 const roles = [
-  'Frontend Developer',
-  'CS Student',
-  'React Enthusiast',
-  'UI Craftsman',
-  'Problem Solver',
-]
+  'Full-Stack Developer',
+  'MERN Stack Engineer',
+  'React.js Developer',
+  'Database Specialist',
+  'UI/UX Developer'
+];
 
 export default function HeroSection() {
   const [roleIndex, setRoleIndex] = useState(0)
@@ -97,7 +97,7 @@ export default function HeroSection() {
           className="flex items-center justify-center gap-2 mb-8"
         >
           <span className="dark:text-[#8b80b0] text-[#6b6480] text-lg md:text-xl font-light">
-            Computer Science Student &nbsp;·&nbsp;
+            Computer Scientist &nbsp;·&nbsp;
           </span>
           <span
             className="gradient-text text-lg md:text-xl font-semibold"

@@ -290,7 +290,7 @@ export default function Navbar() {
                   className="pt-2 mt-1 border-t dark:border-white/5 border-black/5"
                 >
                   <a
-                    href="mailto:ali.haider213f@gmail.com"
+                    href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJZdkGBXsrrQfqbGXDBQxHhTXpGxXBQPntzslBFvWnFlFcmqmQRbxhBStsZxHMqnKRxtVLV"
                     className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-white"
                     style={{
                       background: /*'linear-gradient(135deg, #6e50ff, #c084fc)'*/'transparent',

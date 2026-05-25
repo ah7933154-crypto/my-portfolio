@@ -39,7 +39,10 @@ export default function ContactSection() {
         setFormState({ name: '', email: '', message: '' })
         setTimeout(() => setSent(false), 3000)
       } else {
-        alert(data.message || 'Something went wrong. Please try again.')
+        const validationDetails = Array.isArray(data?.errors)
+          ? data.errors.map((e: { message?: string }) => e.message).filter(Boolean).join('\n')
+          : ''
+        alert(validationDetails || data.message || 'Something went wrong. Please try again.')
       }
     } catch (error) {
       console.error('Error submitting form:', error)
