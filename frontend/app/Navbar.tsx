@@ -12,6 +12,7 @@ export default function Navbar() {
   const [hoveredLink, setHoveredLink] = useState(null)
   const { theme, toggleTheme } = useTheme()
 
+  const GMAIL_URL = "https://mail.google.com/mail/u/0/#inbox?compose=CllgCJZdkGBXsrrQfqbGXDBQxHhTXpGxXBQPntzslBFvWnFlFcmqmQRbxhBStsZxHMqnKRxtVLV";
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', handleScroll)
@@ -290,7 +291,7 @@ export default function Navbar() {
                   className="pt-2 mt-1 border-t dark:border-white/5 border-black/5"
                 >
                   <a
-                    href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJZdkGBXsrrQfqbGXDBQxHhTXpGxXBQPntzslBFvWnFlFcmqmQRbxhBStsZxHMqnKRxtVLV"
+                    href={GMAIL_URL}
                     className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-white"
                     style={{
                       background: /*'linear-gradient(135deg, #6e50ff, #c084fc)'*/'transparent',

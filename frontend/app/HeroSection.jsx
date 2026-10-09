@@ -7,11 +7,9 @@ import dynamic from 'next/dynamic'
 const ParticleField = dynamic(() => import('@/app/particleField'), { ssr: false })
 
 const roles = [
-  'Full-Stack Developer',
-  'MERN Stack Engineer',
-  'React.js Developer',
-  'Database Specialist',
-  'UI/UX Developer'
+  'Aspiring Software Engineer',
+  'Problem Solver',
+  'Enthusiastic Learner',
 ];
 
 export default function HeroSection() {
@@ -97,7 +95,7 @@ export default function HeroSection() {
           className="flex items-center justify-center gap-2 mb-8"
         >
           <span className="dark:text-[#8b80b0] text-[#6b6480] text-lg md:text-xl font-light">
-            Computer Scientist &nbsp;·&nbsp;
+            Computer Science Student &nbsp;·&nbsp;
           </span>
           <span
             className="gradient-text text-lg md:text-xl font-semibold"
